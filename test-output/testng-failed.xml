@@ -6,7 +6,7 @@
       <class name="Testmagento">
         <methods>
           <include name="setUp"/>
-          <include name="signUp"/>
+          <include name="login"/>
         </methods>
       </class> <!-- Testmagento -->
     </classes>

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement; // To interact with elements on the webpa
 import org.openqa.selenium.chrome.ChromeDriver;  // ChromeDriver for Chrome browser
 import org.openqa.selenium.interactions.Actions;  // To perform advanced user interactions like hover
 import org.openqa.selenium.support.ui.Select;     // To handle dropdowns
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest; // TestNG annotation for setup method
 import org.testng.annotations.Test;       // TestNG annotation for test methods
 
@@ -98,6 +99,11 @@ public class Testmagento {
 
         WebElement SubmitButton = driver.findElement(By.xpath("//button[@title='Continue']"));
         SubmitButton.click();  // Submit the signup form
+        
+        String ExpectedResult = driver.findElement(By.className("heading1")).getText();
+        String ActualResult = "Your Account Has Been Created!";
+        
+        Assert.assertEquals(ActualResult.toUpperCase() , ExpectedResult);
     }
 
     // Test 2: Log out the user
@@ -109,6 +115,11 @@ public class Testmagento {
         Thread.sleep(2000);
         WebElement logoutButton = driver.findElement(By.partialLinkText("Logoff"));
         logoutButton.click();  // Click the logout button
+        
+        String ExpectedResult = driver.findElement(By.className("heading1")).getText();
+        String ActualResult = "Account Logout";
+        
+        Assert.assertEquals(ActualResult.toUpperCase() , ExpectedResult);
     }
 
     // Test 3: Log in the user using stored credentials
@@ -124,6 +135,11 @@ public class Testmagento {
 
         WebElement loginButton = driver.findElement(By.xpath("//button[@title='Login']"));
         loginButton.click();  // Click login button
+        
+        String ExpectedResult = driver.findElement(By.className("heading1")).getText();
+        String ActualResult = "My Account";
+        
+        Assert.assertEquals(ActualResult.toUpperCase() + " " + UserFirstName , ExpectedResult);
     }
 
     // Test 4: Add random items to the cart
@@ -158,7 +174,7 @@ public class Testmagento {
         ItemsInside.findElements(By.cssSelector(".col-md-3.col-sm-6.col-xs-12")).get(RanItem).click();
 
         // Check if the item is in stock
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         WebElement ulList = driver.findElement(By.className("productpagecart"));
         String txt = ulList.getText();  // Get stock status text
 
@@ -167,6 +183,11 @@ public class Testmagento {
             Thread.sleep(2000);
             driver.get(myWebSite);
             System.out.println("Sorry, the item is out of stock");
+            
+            String ActualResult = driver.getCurrentUrl();
+            String ExpectedResult = myWebSite;
+            
+            Assert.assertEquals(ActualResult, ExpectedResult);
         } 
         // If in stock, add to cart or submit inquiry for out-of-cart items
         else {
@@ -176,6 +197,11 @@ public class Testmagento {
             if (className.equals("cart")) {
                 Thread.sleep(2000);
                 driver.findElement(By.className("cart")).click();  // Add to cart
+                
+                String ExpectedResult = driver.findElement(By.className("heading1")).getText();
+                String ActualResult = "Shopping Cart";
+                
+                Assert.assertEquals(ActualResult.toUpperCase() , ExpectedResult);
             } else {
                 // If item requires inquiry, fill out the form
                 Thread.sleep(2000);
@@ -192,6 +218,11 @@ public class Testmagento {
 
                 WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
                 submit.click();  // Submit inquiry form
+                
+                String ExpectedResult = driver.findElement(By.className("heading1")).getText();
+                String ActualResult = "Contact Us";
+                
+                Assert.assertEquals(ActualResult.toUpperCase() , ExpectedResult);
             }
         }
     }
